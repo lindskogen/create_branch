@@ -1,18 +1,24 @@
-export const finishCommand = async (args: string[]) => {
+const denoRun = async (cmd: string[]): Promise<string> => {
   const p = Deno.run({
-    cmd: ["git", "notes", "show"],
+    cmd,
     stdin: "inherit",
     stdout: "piped",
     stderr: "inherit",
   });
 
-  const status = await p.status();
+  const { success, code } = await p.status();
 
-  if (!status.success) {
-    Deno.exit(status.code);
+  if (!success) {
+    Deno.exit(code);
   }
 
-  const output = new TextDecoder().decode(await p.output());
+  return new TextDecoder().decode(await p.output());
+};
+
+export const finishCommand = async (args: string[]) => {
+  const s = await denoRun(["git", "branch", "--show-current"]);
+
+  const output = await denoRun(["git", "config", `branch.${s}.description`]);
 
   const data = output.trim();
 

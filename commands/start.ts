@@ -147,7 +147,7 @@ export const startCommand = async (prefix: string) => {
   }
 
   const gitSetMetadata = Deno.run({
-    cmd: ["git", "notes", "add", s, "-m", selectedWorkItem],
+    cmd: ["git", "config", `branch.${s}.description`, selectedWorkItem],
     stdin: "inherit",
     stdout: "inherit",
     stderr: "inherit",
