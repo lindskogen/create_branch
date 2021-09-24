@@ -12,7 +12,7 @@ const denoRun = async (cmd: string[]): Promise<string> => {
     Deno.exit(code);
   }
 
-  return new TextDecoder().decode(await p.output());
+  return new TextDecoder().decode(await p.output()).trim();
 };
 
 export const finishCommand = async (args: string[]) => {
