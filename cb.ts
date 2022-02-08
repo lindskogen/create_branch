@@ -7,7 +7,7 @@ import { finishCommand } from "./commands/finish.ts";
 
 await Yargs(Deno.args)
   .command(
-    "start",
+    "start [prefix]",
     "start working on a task",
     (yargs: any) =>
       yargs.positional("prefix", {
